@@ -5,12 +5,12 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import Head from "next/head";
 import { lightTheme, darkTheme } from "../lib/theme";
-import { useEffect, useState } from "react";
-import DarkContext from "../lib/contexts/darkmode";
+import { useEffect, useState, useContext } from "react";
+import DarkModeContext from "../lib/contexts/darkmode";
 import { ThemeProvider } from "@mui/material";
 
 function MyApp({ Component, pageProps }) {
-    const [isDarkMode, setDarkMode] = useState(false);
+    const [ isDarkMode, setDarkMode ] = useState(false);
 
     useEffect(() => {
         setDarkMode(window.matchMedia("(prefers-color-scheme: dark)").matches);
@@ -30,11 +30,11 @@ function MyApp({ Component, pageProps }) {
                     content="width=device-width, initial-scale=1"
                 ></meta>
             </Head>
-            <DarkContext.Provider value={{ isDarkMode, setDarkMode }}>
-                <ThemeProvider theme={lightTheme}>
+            <DarkModeContext.Provider value={{ isDarkMode, setDarkMode }}>
+                <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
                     <Component {...pageProps} />
                 </ThemeProvider>
-            </DarkContext.Provider>
+            </DarkModeContext.Provider>
         </>
     );
 }
