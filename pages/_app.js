@@ -7,7 +7,9 @@ import Head from "next/head";
 import { lightTheme, darkTheme } from "../lib/theme";
 import { useEffect, useState, useContext } from "react";
 import DarkModeContext from "../lib/contexts/darkmode";
-import { ThemeProvider } from "@mui/material";
+import { ThemeProvider, Box } from "@mui/material";
+import TopAppBar from "../lib/components/appbar";
+import {FloatingButton,BackButton} from "../lib/components/fab";
 
 function MyApp({ Component, pageProps }) {
     const [ isDarkMode, setDarkMode ] = useState(false);
@@ -32,7 +34,10 @@ function MyApp({ Component, pageProps }) {
             </Head>
             <DarkModeContext.Provider value={{ isDarkMode, setDarkMode }}>
                 <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+                    <TopAppBar />
                     <Component {...pageProps} />
+                    <FloatingButton />
+                    <BackButton/>
                 </ThemeProvider>
             </DarkModeContext.Provider>
         </>
